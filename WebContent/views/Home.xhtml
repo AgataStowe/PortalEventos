@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Evento</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:tabView style="margin: 0 auto; width: 800px">
+			<p:tab title="Feed">
+				<f:facet name="actions">
+					<p:button value="Process" />
+				</f:facet>
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:dataTable id="evento" var="evento"
+					value="#{eventoBean.listaEventos}" style="margin-bottom:20px">
+					<f:facet name="header">
+            Eventos Cadastrados
+        </f:facet>
+					<p:column headerText="Nome">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{evento.nome}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{evento.nome}" style="width:100%"
+									label="nome" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Local">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{evento.local}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{evento.local}" style="width:100%"
+									label="local" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Data / Hora">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{evento.data}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{evento.data}" style="width:100%"
+									label="data" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<!--          <p:column headerText="Participantes"> -->
+					<!--             <p:cellEditor> -->
+					<!--                 <f:facet name="output"><h:outputText value="#{evento.id}" /></f:facet> -->
+					<!--                 <f:facet name="input"><p:inputText id="modelInput" value="#{evento.id}" style="width:100%"/></f:facet> -->
+					<!--             </p:cellEditor> -->
+					<!--         </p:column> -->
+					<p:column headerText="Ações" style="width:15%;">
+						<p:commandButton id="participar"
+							action="#{eventoBean.participar(evento)}" value="Participar"
+							ajax="true" immediate="true" alt="Participar" />
+						<h:link outcome="Convite" value="Convidar"/>
+					</p:column>
+				</p:dataTable>
+
+			</p:tab>
+			<p:tab title="Adicionar">
+				<h:form id="formAdd">
+					<p:growl id="growl" sticky="true" showDetail="true" life="1000" />
+					<h:panelGrid columns="1" cellpadding="10" style="margin: 0 auto;">
+						<p:outputLabel for="nome" value="Nome Evento:" />
+						<p:inputText id="nome" value="#{eventoBean.dados.nome}"
+							required="true" />
+
+						<p:outputLabel for="local" value="Local:" />
+						<p:inputText id="local" value="#{eventoBean.dados.local}"
+							required="true" />
+
+						<p:outputLabel for="data" value="Data:" />
+						<p:calendar id="data" value="#{eventoBean.dados.data}" locale="de"
+							pattern="dd.MM.yyyy HH:mm" required="true" />
+						<p:dialog>
+							<h:outputText value="#{eventoBean.dados.data}">
+								<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+							</h:outputText>
+						</p:dialog>
+						<f:facet name="footer">
+							<p:commandButton value="Salvar" update="growl"
+								action="#{eventoBean.salvar}"
+								oncomplete="handleLoginRequest(xhr, status, args)" />
+						</f:facet>
+					</h:panelGrid>
+				</h:form>
+			</p:tab>
+			<p:tab title="Notificacao">
+				<h:form>
+					<p:dataList value="#{eventoBean.eventos}" var="convite"
+						type="ordered">
+						<p:growl id="growl" sticky="true" showDetail="true" life="1000" />
+						<h:panelGrid columns="1" cellpadding="1" style="margin: 0 auto;">
+							<p:outputLabel for="nomeConvite" value="Nome Evento:" />
+							<p:inputText id="nomeConvite" value="#{convite.nome}"
+								required="true" />
+
+							<p:outputLabel for="localConvite" value="Local:" />
+							<p:inputText id="localConvite" value="#{convite.local}"
+								required="true" />
+
+							<p:outputLabel for="dataConvite" value="Data:" />
+							<p:calendar id="dataConvite" value="#{convite.data}" locale="de"
+								pattern="dd.MM.yyyy HH:mm" required="true" />
+							<p:dialog>
+								<h:outputText value="#{convite.data}">
+									<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+								</h:outputText>
+							</p:dialog>
+							<f:facet name="footer">
+								<p:commandButton value="Parcitipar" update="growl"
+									action="#{eventoBean.atualizar(convite)}"
+									oncomplete="handleLoginRequest(xhr, status, args)" />
+								<p:commandButton value="Recusar" update="growl"
+									action="#{eventoBean.remover(convite)}"
+									oncomplete="handleLoginRequest(xhr, status, args)" />
+							</f:facet>
+						</h:panelGrid>
+					</p:dataList>
+				</h:form>
+			</p:tab>
+		</p:tabView>
+
+	</h:form>
+</h:body>
+</html>

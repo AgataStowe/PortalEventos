@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Evento</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:tabView style="margin: 0 auto; width: 800px">
+			<p:tab title="Convidar Usuario">
+				<f:facet name="actions">
+					<p:button value="Process" />
+				</f:facet>
+				<p:growl id="growl" sticky="true" showDetail="true" life="1000" />
+				<h:panelGrid columns="1" cellpadding="1" style="margin: 0 auto;">
+					
+					<p:outputLabel for="nomeEvento" value="Nome Evento:" />
+					<p:inputText id="nomeEvento"
+						value="#{eventoBean.convidado.nomeEvento}" required="true" />
+					
+					<p:outputLabel for="emailUsuario" value="E-mail:" />
+					<p:inputText id="emailUsuario"
+						value="#{eventoBean.convidado.emailUsuario}" required="true" />
+				<br />
+					<f:facet name="footer">
+						<p:commandButton value="Salvar" update="growl"
+							action="#{eventoBean.addParticipante}"
+							oncomplete="handleLoginRequest(xhr, status, args)" />
+					</f:facet>
+				</h:panelGrid>
+				<div>
+					<h:link outcome="Home.xhtml" value="Voltar">
+						<f:param name="home" />
+					</h:link>
+				</div>
+
+			</p:tab>
+		</p:tabView>
+	</h:form>
+</h:body>
+</html>

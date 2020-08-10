@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- Configuracao da conexao com o banco PostgreSQL e dialeto -->
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/dbeventos?createDatabaseIfNotExist=true</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="hibernate.connection.password">postgres</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+
+		<!--Configurações de C3PO -->
+		<property name="c3p0.acquire_increment">1</property>
+		<property name="c3p0.idle_test_period">100</property>
+		<property name="c3p0.max_size">100</property>
+		<property name="c3p0.max_statements">0</property>
+		<property name="c3p0.min_size">10</property>
+		<property name="c3p0.timeout">100</property>
+
+		<!--Configuracoes de debug -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.jdbc.batch_size">20</property>
+
+
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- validate | update | create | create-drop -->
+		<mapping class="br.com.peladas.portalEventos.model.Usuario" />
+		<mapping class="br.com.peladas.portalEventos.model.Evento" />
+<!-- 		<mapping -->
+<!-- 			class="br.com.peladas.portalEventos.model.EventoUsuario" /> -->
+		<mapping
+			class="br.com.peladas.portalEventos.model.Notificacao" />
+
+	</session-factory>
+</hibernate-configuration>

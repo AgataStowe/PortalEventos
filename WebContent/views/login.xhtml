@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Evento</title>
+</h:head>
+<h:body>
+	<h:form id="formUsuario">
+		<p:growl id="growl" sticky="true" showDetail="true" life="1000" />
+		<p:panel header="Login" widgetVar="dlg" resizable="false"
+			style="margin: 0 auto; width: 400px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="email" value="E-mail" />
+				<p:inputText id="email" value="#{usuarioBean.usuario.email}"
+					required="true" />
+
+				<p:outputLabel for="senha" value="Senha" />
+				<p:password id="senha" value="#{usuarioBean.usuario.senha}"
+					required="true" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Login" update="growl"
+						action="#{usuarioBean.login}"
+						oncomplete="handleLoginRequest(xhr, status, args)" />
+				</f:facet>
+			</h:panelGrid>
+			<div>
+				<br />
+				<h:link outcome="Cadastro" value="Cadastre-se">
+					<f:param name="cadastro" />
+				</h:link>
+			</div>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
